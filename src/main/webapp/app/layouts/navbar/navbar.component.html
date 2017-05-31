@@ -1,0 +1,42 @@
+<div class="header container-fluid ">
+    <div class="header__container container">
+        <div class="header__logo logo">
+            <img src="../../../content/images/logo.png" class="logo__image">
+            <p class="logo__text-first-word">Distribution</p>
+            <p class="logo__text-second-word">Network</p>
+        </div>
+
+        <div class="header__toggle-button">
+            <button class="button button_transparent" (click) = "toggleNavbar()">
+                <span class="fa fa-bars" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="header__nav" [ngClass] = "{'header__nav_show':isNavbarCollapsed}">
+            <ul class="nav__items nav__items_toggle_lg">
+                <li class="nav__item">
+                    <a class="header__link" href="#">Статьи</a>
+                </li>
+                <li class="nav__item">
+                    <a class="header__link" href="#">Статьи</a>
+                </li>
+                <li class="nav__item">
+                    <a class="header__link" href="#">События</a>
+                </li>
+                <li class="nav__item">
+                    <a routerLink="/tools" routerLinkActive="active" class="header__link">Инструменты</a>
+                </li>
+                <li class="nav__item">
+                    <a class="header__link" href="#">Библиотека</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="header__login">
+            <a href="" class="header__link">Войти</a>
+        </div>
+
+    </div>
+</div>
+
+

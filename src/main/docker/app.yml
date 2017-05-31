@@ -1,0 +1,14 @@
+version: '2'
+services:
+    distributionnetwork_2017_05_30-app:
+        image: distributionnetwork_2017_05_30
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://distributionnetwork_2017_05_30-postgresql:5432/DistributionNetwork_2017_05_30
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    distributionnetwork_2017_05_30-postgresql:
+        extends:
+            file: postgresql.yml
+            service: distributionnetwork_2017_05_30-postgresql

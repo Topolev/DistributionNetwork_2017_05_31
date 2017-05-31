@@ -1,0 +1,72 @@
+@import "../../content/scss/custom_variables.scss";
+
+.tools {
+    font-family: "Open Sans";
+    &__item {
+        border-top: 1px solid $color-light-gray;
+        padding: $padding;
+    }
+    &__item:last-child{
+        border-bottom: 1px solid $color-light-gray;
+    }
+    &__item:hover {
+        background: #f6f8f9;
+    }
+
+    &__data {
+        font-size: 0.9rem;
+        color: #999;
+    }
+
+    &__title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 10px 0;
+        color:#000000;
+        display:block;
+    }
+    &__title:hover{
+        text-decoration: underline;
+    }
+    &__description{
+        line-height:1.2rem;
+    }
+
+}
+
+.authors {
+    display: flex;
+
+    &__item {
+        display: flex;
+        margin-right: 15px;
+    }
+
+    &__photo {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: block;
+    }
+    &__title {
+        padding-left: 10px;
+    }
+    &__name {
+        margin: 0;
+    }
+    &__tag {
+        color: $color-turquoise;
+    }
+}
+
+.tags{
+    color:#999;
+    &__label{
+        color:#999;
+        font-size:0.9rem;
+    }
+    &__tag{
+        color:#999;
+        font-size:0.9rem;
+    }
+}

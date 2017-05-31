@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <h4 class="modal-title">Создать характеристику</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Имя</label>
+        <div class="col-8">
+            <input class="form-control" type="text" [(ngModel)]='characteristic.label'>
+        </div>
+        <div class="col-2">
+            <p style="width:100%; height:36px; border:1px solid #efefef; border-radius: 4px;">
+                <input type="color" style="width:100%; height:100%; background: none;" [(ngModel)]='characteristic.color'/>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label" style="text-align:right;">Ступень напряжения</label>
+        <div class="col-8">
+            <select class="form-control" [(ngModel)]="characteristic.voltageStep">
+                <option [ngValue]="null">Не выбрано</option>
+                <option *ngFor='let voltageStep of voltageSteps' [ngValue]="voltageStep.value">{{voltageStep.value}}</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label" style="text-align:right;">Тип защиты</label>
+        <div class="col-8">
+            <select class="form-control" [(ngModel)]="characteristic.typeProtection" (change)="changeTypeProtection()">
+                <option [ngValue]="null">Не выбрано</option>
+                <option [ngValue]="0">Предохранитель</option>
+                <option [ngValue]="1">Автоматический выключатель</option>
+                <option [ngValue]="2">Пользовательская настройка</option>
+            </select>
+        </div>
+    </div>
+
+    <div [ngSwitch]="characteristic.typeProtection">
+
+        <!--SET UP FUSE-->
+        <div *ngSwitchCase="0">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Тип предохранителя</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildFuseCharacteristic()">
+                        <option [ngValue]="null">Задать</option>
+                        <option *ngFor="let fusePointsTemplate of characteristicService.getFusePointTemplates()" [ngValue]="fusePointsTemplate">
+                            {{fusePointsTemplate.label}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!--END SET UP FUSE-->
+
+        <!--SET UP SWITCHER-->
+        <div *ngSwitchCase="1">
+            <div class="form-group row">
+                <label class="col-4 col-form-label" style="text-align:right;">Тип автоматического выключателя</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildSwitcherCharacteristic()">
+                        <option [ngValue]="null">Задать</option>
+                        <option *ngFor="let switcherPointsTemplate of characteristicService.getSwitcherPointTemplates()" [ngValue]="switcherPointsTemplate">
+                            {{switcherPointsTemplate.label}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="characteristic.pointsTemplate != null">
+                <label class="col-4 col-form-label" style="text-align:right;">Пусковой ток</label>
+                <div class="col-8">
+                    <input class="form-control" type="text" [(ngModel)]='characteristic.curves[0].baseValue'>
+                </div>
+            </div>
+        </div>
+        <!--END SET UP SWITCHER-->
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="saveCharacteristic()">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+</div>
+
+
+

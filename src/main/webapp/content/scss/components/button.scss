@@ -1,0 +1,29 @@
+@import "../../../content/scss/custom_variables";
+
+.button{
+    display: inline-block;
+    font-weight: normal;
+    padding:0.4rem 1rem;
+    vertical-align: middle;
+    transition: all 0.2s ease-in-out;
+    background: $color-turquoise;
+    border: 2px solid $color-turquoise;
+    color: #fff;
+    margin-bottom:15px;
+
+    &:hover{
+        background: #fff;
+        color: $color-turquoise;
+    }
+
+    &.button_inverse{
+        background: #fff;
+        color: $color-turquoise;
+        &:hover{
+            background: $color-turquoise;
+            color:  #fff;
+        }
+    }
+
+
+}
