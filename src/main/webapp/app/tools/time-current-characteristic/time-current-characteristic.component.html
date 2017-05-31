@@ -1,143 +1,22 @@
 <div class="container">
-    <p>Время токовы-характеристики</p>
-    <div class="row">
-        <div class="col-md-6">
-            <coordinate-panel
-                [configPanel]="configPanel"
-                [characteristics]="characteristics"
-                [sectionsX]="sectionsX">
-            </coordinate-panel>
+<ngb-tabset>
+    <ngb-tab title="Характеристики">
+        <ng-template ngbTabContent>
+            <workspace></workspace>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Предохранители">
+        <ng-template ngbTabContent>
+            <fuse-catalog></fuse-catalog>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Автоматические выключатели">
+        <ng-template ngbTabContent>
+            <switcher-catalog></switcher-catalog>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>
+</div>>
 
 
-            <ng-container *ngFor="let characteristic of characteristics">
-                <div>
-                    {{characteristic.label}}
-                </div>
-            </ng-container>
-        </div>
-
-
-        <div class="col-md-6">
-            <div class="setup-block">
-                <h1 class="setup-block__title">Защитные характеристики</h1>
-                <div class="setup-block__content">
-                    <button class="button button_inverse"
-                            (click)="openModalCreateOrEditCharacteristic(null)">Создать характеристику
-                    </button>
-                    <div *ngIf="characteristics.length===0" class="setup-block__alert alert alert-warning"> Для
-                        добавления новой защитной
-                        характеристики, нажмите на кнопку сверху
-                    </div>
-
-                    <table class="table"
-                           *ngIf="characteristics.length>0">
-                        <thead class="thead-default">
-                        <tr>
-                            <th>Наименование</th>
-                            <th>U, кВ</th>
-                            <th>Цвет</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <ng-container *ngFor="let characteristic of characteristics; let i = index;">
-                            <tr>
-                                <td>
-                                    <a (click)="showdescription(i)">
-                                        <i class="fa"
-                                           [ngClass]="{' fa-caret-up': !description[i], 'fa-caret-down': description[i]}"
-                                           aria-hidden="true"></i>
-                                    </a>
-                                    {{description}}
-                                    {{characteristic.label == undefined || characteristic.label.trim() ==''? '&#60;без имени&#62;':
-                                    characteristic.label }}
-                                </td>
-                                <td>{{characteristic.voltageStep}}</td>
-                                <td>
-                                    <div class="setup-block__color" [style.background]="characteristic.color"></div>
-                                </td>
-                                <td>
-                                    <input type="checkbox"
-                                           class="setup-block__visable-input"
-                                           [attr.id]="'visable_' + characteristic.id"
-                                           [(ngModel)]="characteristic.visable"
-                                           (click)="changeVisable(characteristic)"/>
-                                    <label class="setup-block__visable-label"
-                                           [attr.for]="'visable_' + characteristic.id">
-                                    </label>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary btn-sm"
-                                            (click)="openModalCreateOrEditCharacteristic(characteristic)">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary btn-sm"
-                                            (click)="deleteCharacteristic(characteristic)">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="description" [ngClass]="{'show': description[i]}">
-                                <td colspan="5" [ngSwitch]="characteristic.typeProtection">
-                                    <div  *ngSwitchCase="0">
-                                        Предохранитель {{characteristic.pointsTemplate.label}}
-                                    </div>
-                                    <div  *ngSwitchCase="1">
-                                        Автоматический выключатель {{characteristic.pointsTemplate.label}} Iном ={{characteristic.curves[0].baseValue}} А
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </ng-container>
-
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="setup-block">
-                <h1 class="setup-block__title">Срезы по току</h1>
-
-                <div class="setup-block__content">
-                    <button class="button button_inverse"
-                            (click)="addSectionX()">Добавить срез
-                    </button>
-                    <div *ngIf="sectionsX.length === 0" class="setup-block__alert alert alert-warning"> Для
-                        добавления нового среза по ток, нажмите на кнопку сверху
-                    </div>
-                    <table class="table"
-                           *ngIf="sectionsX.length>0">
-                        <thead class="thead-default">
-                        <tr>
-                            <th>Наименование</th>
-                            <th>Ток, А</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let sectionX of sectionsX">
-                            <td><input type="text" class="form-control" [(ngModel)]='sectionX.label'></td>
-                            <td><input type="text" class="form-control" [(ngModel)]='sectionX.x'
-                                       (keyup)="changeSectionX()">
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-secondary btn-sm"
-                                        (click)="deleteSectionX(sectionX)">
-                                    &#10005;</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-</div>
 

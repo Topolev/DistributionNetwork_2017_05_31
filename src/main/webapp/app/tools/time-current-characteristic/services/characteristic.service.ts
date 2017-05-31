@@ -18,7 +18,6 @@ export class CharacteristicService {
     private currentCharacteristic = new Subject<Characteristic>();
     private newCharacteristic = new Subject<Characteristic>();
     private builderCurves = new BuilderCurves();
-    private fusePointTemplates: PointsTemplate[] = defaultFusePointTemplates;
     private switcherPointTemplates: PointsTemplate[] = defaultSwitcherPointTemplates;
     private curveTemplates: CurveTemplate[] = defaultCurveTemplates;
 
@@ -33,31 +32,4 @@ export class CharacteristicService {
         this.newCharacteristic.next(characteristic);
     }
 
-    public getFusePointTemplates(): PointsTemplate[] {
-        return this.fusePointTemplates;
-    }
-
-    public getSwitcherPointTemplates(): PointsTemplate[] {
-        return this.switcherPointTemplates;
-    }
-
-    public buildFuseCharacteristic(pointsTemplate: PointsTemplate, characteristic: Characteristic) {
-        if (pointsTemplate != null) {
-            let curve: Curve = this.builderCurves.buildCurveByTemplate(this.curveTemplates[0]);
-            (<PointsAbsCurve> curve).points = pointsTemplate.points.map((point) => new Point(point.x, point.y));
-            characteristic.curves = [curve];
-        } else {
-            characteristic.curves = [];
-        }
-    }
-
-    public buildSwitcherCharacteristic(pointsTemplate: PointsTemplate, characteristic: Characteristic) {
-        if (pointsTemplate != null) {
-            let curve: Curve = this.builderCurves.buildCurveByTemplate(this.curveTemplates[1]);
-            (<PointsRelativeCurve> curve).points = pointsTemplate.points.map((point) => new Point(point.x, point.y));
-            characteristic.curves = [curve];
-        } else {
-            characteristic.curves = [];
-        }
-    }
 }

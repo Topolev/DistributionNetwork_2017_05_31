@@ -3,9 +3,11 @@ import {Characteristic, TYPE_PROTECTION} from '../coordinat-panel/characteristic
 import {ConfigCoordinatePanel} from '../coordinat-panel/classes/ConfigCoordinatePanel';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {defaultVoltageSteps} from './VoltageSteps';
-import {CharacteristicService} from './characteristic.service';
+import {CharacteristicService} from '../services/characteristic.service';
 import {BuilderCurves} from '../coordinat-panel/curves/BuilderCurves';
 import {PointsTemplate} from '../coordinat-panel/classes/PointsTemplate';
+import {FuseService} from '../services/fuse.service';
+import {SwitcherService} from '../services/switcher.service';
 
 declare var jQuery: any;
 
@@ -33,7 +35,9 @@ export class CharacteristicComponent implements OnInit {
 
     constructor(private modalService: NgbModal,
                 private activeModal: NgbActiveModal,
-                private characteristicService: CharacteristicService) {
+                private characteristicService: CharacteristicService,
+                private fuseService: FuseService,
+                private switcherService: SwitcherService) {
         characteristicService.currentCharacteristic$.subscribe(
             (characteristic) => {
                 this.characteristic = characteristic ? characteristic : new Characteristic(Date.now());
@@ -82,11 +86,11 @@ export class CharacteristicComponent implements OnInit {
     }
 
     buildFuseCharacteristic() {
-        this.characteristicService.buildFuseCharacteristic(this.characteristic.pointsTemplate, this.characteristic);
+        this.fuseService.buildFuseCharacteristic(this.characteristic.pointsTemplate, this.characteristic);
     }
 
     buildSwitcherCharacteristic() {
-        this.characteristicService.buildSwitcherCharacteristic(this.characteristic.pointsTemplate, this.characteristic);
+        this.switcherService.buildSwitcherCharacteristic(this.characteristic.pointsTemplate, this.characteristic);
     }
 
 }

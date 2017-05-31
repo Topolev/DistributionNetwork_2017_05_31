@@ -50,8 +50,8 @@
                 <div class="col-8">
                     <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildFuseCharacteristic()">
                         <option [ngValue]="null">Задать</option>
-                        <option *ngFor="let fusePointsTemplate of characteristicService.getFusePointTemplates()" [ngValue]="fusePointsTemplate">
-                            {{fusePointsTemplate.label}}
+                        <option *ngFor="let fusePointsTemplate of fuseService.getFusePointTemplates()" [ngValue]="fusePointsTemplate">
+                            {{fusePointsTemplate.series + " " + fusePointsTemplate.type}}
                         </option>
                     </select>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="col-8">
                     <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildSwitcherCharacteristic()">
                         <option [ngValue]="null">Задать</option>
-                        <option *ngFor="let switcherPointsTemplate of characteristicService.getSwitcherPointTemplates()" [ngValue]="switcherPointsTemplate">
+                        <option *ngFor="let switcherPointsTemplate of switcherService.getSwitcherPointTemplates()" [ngValue]="switcherPointsTemplate">
                             {{switcherPointsTemplate.label}}
                         </option>
                     </select>

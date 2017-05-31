@@ -5,7 +5,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TimeCurrentCharacteristicComponent} from './time-current-characteristic.component';
 import {CoordinatePanelComponent} from './coordinat-panel/coordinate-panel.component';
 import {CharacteristicComponent} from './modals/characteristic.component';
-import {CharacteristicService} from './modals/characteristic.service';
+import {CharacteristicService} from './services/characteristic.service';
+import {FuseCatalogComponent} from './fuse-catalog.component';
+import {SwitcherCatalogComponent} from './switcher-catalog.component';
+import {WorkspaceComponent} from './workspace.component';
+import {FuseService} from './services/fuse.service';
+import {SwitcherService} from './services/switcher.service';
+import {FuseTemplateComponent} from './modals/fuse-template.component';
 
 @NgModule({
     imports: [
@@ -14,15 +20,24 @@ import {CharacteristicService} from './modals/characteristic.service';
         NgbModule
     ],
     declarations: [
+        WorkspaceComponent,
+        FuseCatalogComponent,
+        FuseTemplateComponent,
+        SwitcherCatalogComponent,
         TimeCurrentCharacteristicComponent,
         CoordinatePanelComponent,
         CharacteristicComponent
     ],
     entryComponents: [
+        WorkspaceComponent,
+        SwitcherCatalogComponent,
+        FuseCatalogComponent,
+        FuseTemplateComponent,
         TimeCurrentCharacteristicComponent,
         CoordinatePanelComponent,
         CharacteristicComponent
     ],
-    providers: [CharacteristicService]
+    providers: [CharacteristicService, FuseService, SwitcherService]
 })
-export class TimeCurrentCharacteristicModule {}
+export class TimeCurrentCharacteristicModule {
+}

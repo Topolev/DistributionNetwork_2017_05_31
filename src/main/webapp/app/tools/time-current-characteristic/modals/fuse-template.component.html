@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">Создать/редактировать характеристику</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Cерия</label>
+        <div class="col-8">
+            <input class="form-control" type="text" [(ngModel)]='pointsTemplate.series'>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Тип</label>
+        <div class="col-8">
+            <input class="form-control" type="text" [(ngModel)]='pointsTemplate.type'>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Производитель</label>
+        <div class="col-8">
+            <input class="form-control" type="text" [(ngModel)]='pointsTemplate.manufacture'>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+</div>
+
+
+
