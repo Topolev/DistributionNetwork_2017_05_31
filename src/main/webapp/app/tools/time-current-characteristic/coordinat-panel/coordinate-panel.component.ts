@@ -3,7 +3,7 @@ import {ConfigCoordinatePanel} from './classes/ConfigCoordinatePanel';
 import * as util from './classes/UtilCanvas';
 import {Curve} from './curves/Curve';
 import {SectionX} from './classes/SectionX';
-import {Characteristic} from "./characteristic/Characteristic";
+import {Characteristic} from './characteristic/Characteristic';
 
 @Component({
     selector: 'coordinate-panel',
@@ -36,8 +36,7 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
                 this.drawSectionsX();
             }
 
-            if (changes.characteristics){
-                console.log("Rerender")
+            if (changes.characteristics) {
                 this.drawCharacteristics();
             }
         }
@@ -53,7 +52,6 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
         this.ctxCurves = this.curvesCanvas.nativeElement.getContext('2d');
         this.ctxStaticSlice = this.staticSlice.nativeElement.getContext('2d');
         this.ctxSlice = this.slice.nativeElement.getContext('2d');
-
 
         /* draw workspace*/
         const config = this.config;
@@ -77,21 +75,22 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
     private clearCanvases() {
         const width = this.config.width;
         const height = this.config.height;
-        util.clearCanvas(this.ctxIntermidiateXAxis, width, height);
-        util.clearCanvas(this.ctxCurves, width, height);
+        util.clearAllCanvas(this.ctxIntermidiateXAxis, width, height);
+        util.clearAllCanvas(this.ctxCurves, width, height);
     }
 
     private drawAxisXLog() {
+        const conf = this.config;
         let valueSegment = 1;
-        let degree = this.config.xDivisionLog;
-        let xFact: number, color: string = this.config.colorIntermediateAxis;
+        let degree = conf.xDivisionLog;
+        let xFact: number, color: string = conf.colorIntermediateAxis;
 
-        while ((xFact = this.xOriginToFactLog(valueSegment * Math.pow(10, degree))) < this.config.width - this.config.marginX) {
+        while ((xFact = this.xOriginToFactLog(valueSegment * Math.pow(10, degree))) < conf.width - conf.marginX) {
             this.drawVerticalLine(this.ctxIntermidiateXAxis, xFact, color);
             if (valueSegment === 1) {
                 let valueAxis = (degree < 5) && (degree > -5) ? Math.pow(10, degree).toString() : '10e' + degree;
                 let widthText = this.ctxIntermidiateXAxis.measureText(valueAxis).width;
-                this.ctxIntermidiateXAxis.fillText(valueAxis, xFact - widthText / 2, this.config.height - this.config.marginY + 30);
+                this.ctxIntermidiateXAxis.fillText(valueAxis, xFact - widthText / 2, conf.height - conf.marginY + 30);
             }
             valueSegment++;
             if (valueSegment === 10) {
@@ -130,13 +129,22 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
         for (let curve of curves) {
             curve.draw(this.ctxCurves, this.config, color);
         }
+        this.clearCanvasOutWorkspace(this.ctxCurves);
     }
 
-    private drawCharacteristics(){
-        var conf = this.config;
-        util.clearCanvas(this.ctxCurves, conf.width, conf.height);
-        for (let characteristic of this.characteristics){
-            if (characteristic.visable){
+    private clearCanvasOutWorkspace(ctx: CanvasRenderingContext2D) {
+        const conf = this.config;
+        util.clearCanvas(ctx, 0, 0, conf.marginX, conf.height);
+        util.clearCanvas(ctx, 0, 0, conf.width, conf.marginY);
+        util.clearCanvas(ctx, 0, conf.height - conf.marginY, conf.width, conf.height);
+        util.clearCanvas(ctx, conf.width - conf.marginX, 0, conf.width, conf.height);
+    }
+
+    private drawCharacteristics() {
+        const conf = this.config;
+        util.clearAllCanvas(this.ctxCurves, conf.width, conf.height);
+        for (let characteristic of this.characteristics) {
+            if (characteristic.visable) {
                 this.drawCurves(characteristic.curves, characteristic.color);
             }
         }
@@ -147,38 +155,36 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
         ev.preventDefault();
 
         let currentX = ev.offsetX;
-        let conf = this.config;
+        const conf = this.config;
 
         if ((currentX > conf.marginX) && (currentX < (conf.width - conf.marginX))) {
             let xOrigin = this.xFactToOrigin(currentX);
-            util.clearCanvas(this.ctxSlice, conf.width, conf.height);
+            util.clearAllCanvas(this.ctxSlice, conf.width, conf.height);
 
             /* HORIZONAL LINE*/
-            for (let characteristic of this.characteristics){
+            for (let characteristic of this.characteristics) {
                 for (let curve of characteristic.curves) {
-                    curve.drawHorizontalLine(this.ctxSlice, this.config, xOrigin);
+                    curve.drawHorizontalLine(this.ctxSlice, conf, xOrigin);
                 }
             }
 
             /* VERTICAL LINE*/
             let xFact = this.xOriginToFactLog(xOrigin);
-            this.drawLineDash(this.ctxSlice, xFact, conf.marginY, xFact, conf.height - conf.marginY);
-            this.renderTextAndFillBackground(this.ctxSlice, xOrigin.toFixed(2).toString(), xFact, 30);
+            util.drawLineDash(this.ctxSlice, xFact, conf.marginY, xFact, conf.height - conf.marginY);
+            util.renderTextAndFillBackground(this.ctxSlice, xOrigin.toFixed(2).toString(), xFact, 30);
         } else {
-            util.clearCanvas(this.ctxSlice, conf.width, conf.height);
+            util.clearAllCanvas(this.ctxSlice, conf.width, conf.height);
         }
-
     }
 
-
     public drawSectionsX() {
-        let conf = this.config;
-        util.clearCanvas(this.ctxStaticSlice, conf.width, conf.height);
+        const conf = this.config;
+        util.clearAllCanvas(this.ctxStaticSlice, conf.width, conf.height);
 
         for (let sectionX of this.sectionsX) {
             if (sectionX.x !== undefined) {
                 // Horizonal line
-                for (let characteristic of this.characteristics){
+                for (let characteristic of this.characteristics) {
                     for (let curve of characteristic.curves) {
                         curve.drawHorizontalLine(this.ctxStaticSlice, conf, sectionX.x);
                     }
@@ -186,42 +192,40 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
 
                 // Vertical line
                 let xFact = this.xOriginToFactLog(sectionX.x);
-                this.drawLineDash(this.ctxStaticSlice, xFact, conf.marginY, xFact, conf.height - conf.marginY);
-                this.renderTextAndFillBackground(this.ctxStaticSlice, (+sectionX.x).toFixed(2).toString(), xFact, 30);
+                util.drawLineDash(this.ctxStaticSlice, xFact, conf.marginY, xFact, conf.height - conf.marginY);
+                util.renderTextAndFillBackground(this.ctxStaticSlice, (+sectionX.x).toFixed(2).toString(), xFact, 30);
             }
         }
-
-
     }
 
     private mouseWheel = (e: MouseWheelEvent) => {
         e.stopPropagation();
         e.preventDefault();
 
-        let conf = this.config;
+        const conf = this.config;
         let delta = e.deltaY || e.detail || e.wheelDelta;
         if (delta < 0 && conf.scaleMouse < conf.maxScale) {
             conf.scaleMouse = +(conf.scaleMouse + 0.1).toFixed(1);
-        };
+        }
         if (delta > 0 && conf.scaleMouse > conf.minScale) {
             conf.scaleMouse = +(conf.scaleMouse - 0.1).toFixed(1);
-        };
+        }
 
         this.render();
     }
 
     private xOriginToFactLog(xOrigin: number): number {
-        let conf = this.config;
+        const conf = this.config;
         return conf.marginX + (Math.log10(xOrigin) - conf.xDivisionLog) * conf.xInitPxPerDivision * conf.scaleMouse;
     }
 
     private yOriginToFactLog(yOrigin: number): number {
-        let conf = this.config;
+        const conf = this.config;
         return conf.height - conf.marginY - (Math.log10(yOrigin) - conf.yDivisionLog) * conf.yInitPxPerDivision * conf.scaleMouse;
     }
 
     private xFactToOrigin(xFact: number): number {
-        let conf = this.config;
+        const conf = this.config;
         return Math.pow(10, (xFact - conf.marginX) / (conf.xInitPxPerDivision * conf.scaleMouse) + conf.xDivisionLog);
     }
 
@@ -233,24 +237,4 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
         util.drawLine(ctx, this.config.marginX, y, this.config.width - this.config.marginX, y, color);
     }
 
-    // Exclude
-    private drawLineDash(ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number, color = 'red') {
-        ctx.setLineDash([5, 3]);
-        /* dashes are 5px and spaces are 3px*/
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-        ctx.setLineDash([1, 0]);
-    }
-
-    // Exclude
-    private renderTextAndFillBackground(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, color = 'yellow') {
-        let widthText = ctx.measureText(text).width;
-
-        ctx.fillStyle = 'yellow';
-        ctx.fillRect(x - 3, y + 5, widthText + 3, -20);
-        ctx.fillStyle = 'blue';
-        ctx.fillText(text, x, y);
-    }
 }

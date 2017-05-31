@@ -5,332 +5,315 @@ export const enum TYPE_CURVE  {
     INDEPENDENT
 }
 
-
 export class VariableDescription {
     labelForUser: string;
     label: string;
 }
-
 
 export class CurveTemplate {
     id: number;
     label: string;
     type: TYPE_CURVE;
 
-    //Make sense only for ExpressionArea
+    // Make sense only for ExpressionArea
     variableDescriptions?: VariableDescription[];
     fn?: (x: number) => number;
     displayExpression?: string;
 }
 
-
 export const defaultCurveTemplates: CurveTemplate[] = [
     {
         id: 0,
-        label: "По точкам (абсолютные значение)",
+        label: 'По точкам (абсолютные значение)',
         type: TYPE_CURVE.POINTS_ABS
     },
     {
         id: 1,
-        label: "По точкам (относительные значение)",
+        label: 'По точкам (относительные значение)',
         type: TYPE_CURVE.POINTS_RELATIVE
     },
     {
         id: 2,
-        label: "Независимая",
+        label: 'Независимая',
         type: TYPE_CURVE.INDEPENDENT,
         variableDescriptions: [{
-            label: "Isz",
-            labelForUser: "Пусковой ток",
+            label: 'Isz',
+            labelForUser: 'Пусковой ток',
         }, {
-            label: "tsz",
-            labelForUser: "Время срабатывания",
+            label: 'tsz',
+            labelForUser: 'Время срабатывания',
         }],
-        fn:function(x) {
+        fn(x) {
             let tsz = this.variables['tsz'];
             return tsz;
         }
     },
     {
         id: 3,
-        label: "IEC стандартно инверсная",
+        label: 'IEC стандартно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени T",
+            label: 'T',
+            labelForUser: 'Постоянная времени T',
         }, {
-            label: "Is",
-            labelForUser: "Уставка Is",
+            label: 'Is',
+            labelForUser: 'Уставка Is',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент C",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент C',
         }],
-        fn:function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (0.14 / (Math.pow(I / Is, 0.02) - 1)) + C;
         },
-        displayExpression: "t = T \\times \\frac{0.14}{\\left( \\frac{I}{I_s}\\right)^{0.02}-1} + C"
+        displayExpression: 't = T \\times \\frac{0.14}{\\left( \\frac{I}{I_s}\\right)^{0.02}-1} + C'
     }, {
         id: 4,
-        label: "IEC сильно инверсная",
+        label: 'IEC сильно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени T",
+            label: 'T',
+            labelForUser: 'Постоянная времени T',
         }, {
-            label: "Is",
-            labelForUser: "Уставка ток Is",
+            label: 'Is',
+            labelForUser: 'Уставка ток Is',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент C",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент C',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (13.1 / (I / Is - 1)) + C;
         },
-        displayExpression: "t = T \\times \\frac{13.1}{ \\frac{I}{I_s}-1} + C"
+        displayExpression: 't = T \\times \\frac{13.1}{ \\frac{I}{I_s}-1} + C'
     }, {
         id: 5,
-        label: "IEC чрезвычайно инверсная",
+        label: 'IEC чрезвычайно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (80 / (Math.pow(I / Is, 2) - 1)) + C;
         },
-        displayExpression: "t = T \\times \\frac{80}{\\left( \\frac{I}{I_s}\\right)^{2} - 1} + C"
+        displayExpression: 't = T \\times \\frac{80}{\\left( \\frac{I}{I_s}\\right)^{2} - 1} + C'
     },
     {
         id: 6,
-        label: "UK длительно инверсная",
+        label: 'UK длительно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (120 / (I / Is - 1)) + C;
         },
-        displayExpression: "t = T \\times \\frac{120}{ \\frac{I}{I_s} - 1} + C"
+        displayExpression: 't = T \\times \\frac{120}{ \\frac{I}{I_s} - 1} + C'
     }, {
         id: 7,
-        label: "UK для выпрямителя",
+        label: 'UK для выпрямителя',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (45900 / (Math.pow(I / Is, 5.6) - 1)) + C;
         },
-        displayExpression: "t = T \\times \\frac{45900}{ \\frac{I}{I_s}^{5.6} - 1} + C"
+        displayExpression: 't = T \\times \\frac{45900}{ \\frac{I}{I_s}^{5.6} - 1} + C'
     },
     {
         id: 8,
-        label: "IEEE умеренно инверсная",
+        label: 'IEEE умеренно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (0.0515 / (Math.pow(I / Is, 0.02) - 1) + 0.114) + C;
         },
-        displayExpression: "t = T \\times \\left( \\frac{0.0515}{ \\frac{I}{I_s}^{0.02} - 1} +0.114 \\right) + C"
+        displayExpression: 't = T \\times \\left( \\frac{0.0515}{ \\frac{I}{I_s}^{0.02} - 1} +0.114 \\right) + C'
     }, {
         id: 9,
-        label: "IEEE сильно инверсная",
+        label: 'IEEE сильно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (19.61 / (Math.pow(I / Is, 2) - 1) + 0.491) + C;
         },
-        displayExpression: "t = T \\times \\left( \\frac{19.61}{ \\frac{I}{I_s}^{2} - 1} +0.491 \\right) + C"
+        displayExpression: 't = T \\times \\left( \\frac{19.61}{ \\frac{I}{I_s}^{2} - 1} +0.491 \\right) + C'
     }, {
         id: 10,
-        label: "IEEE чрезвычайно инверсная",
+        label: 'IEEE чрезвычайно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени T",
+            label: 'T',
+            labelForUser: 'Постоянная времени T',
         }, {
-            label: "Is",
-            labelForUser: "Уставка Is",
+            label: 'Is',
+            labelForUser: 'Уставка Is',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент C",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент C',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (28.2 / (Math.pow(I / Is, 2) - 1) + 0.1217) + C;
         },
-        displayExpression: "t = T \\times \\left( \\frac{28.2}{ \\frac{I}{I_s}^{2} - 1} + 0.1217 \\right) + C"
+        displayExpression: 't = T \\times \\left( \\frac{28.2}{ \\frac{I}{I_s}^{2} - 1} + 0.1217 \\right) + C'
     },
     {
         id: 11,
-        label: "US инверсная",
+        label: 'US инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (5.95 / (Math.pow(I / Is, 2) - 1) + 0.18) + C;
         },
-        displayExpression: "t = T \\times \\left( \\frac{5.95}{ \\frac{I}{I_s}^{2} - 1} + 0.18 \\right) + C"
+        displayExpression: 't = T \\times \\left( \\frac{5.95}{ \\frac{I}{I_s}^{2} - 1} + 0.18 \\right) + C'
     }, {
         id: 12,
-        label: "US кратковременно инверсная",
+        label: 'US кратковременно инверсная',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени",
+            label: 'T',
+            labelForUser: 'Постоянная времени',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }, {
-            label: "C",
-            labelForUser: "Постоянный коэффициент",
+            label: 'C',
+            labelForUser: 'Постоянный коэффициент',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             let C = this.variables['C'];
             return T * (0.16758 / (Math.pow(I / Is, 2) - 1) + 0.11858) + C;
         },
-        displayExpression: "t = T \\times \\left( \\frac{0.16758}{ \\frac{I}{I_s}^{2} - 1} + 0.11858 \\right) + C"
+        displayExpression: 't = T \\times \\left( \\frac{0.16758}{ \\frac{I}{I_s}^{2} - 1} + 0.11858 \\right) + C'
     },
     {
         id: 13,
-        label: "RI",
+        label: 'RI',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "K",
-            labelForUser: "Коэффициент K",
+            label: 'K',
+            labelForUser: 'Коэффициент K',
         }, {
-            label: "Is",
-            labelForUser: "Уставка Is",
+            label: 'Is',
+            labelForUser: 'Уставка Is',
         }],
-        fn: function(I) {
+        fn(I) {
             let K = this.variables['K'];
             let Is = this.variables['Is'];
             return K * (1 / (0.339 - (0.236 * Is / I)));
         },
-        displayExpression: "t = K \\times \\frac{1}{0.339 - 0.236 \\times \\frac{I_s}{I}} "
+        displayExpression: 't = K \\times \\frac{1}{0.339 - 0.236 \\times \\frac{I_s}{I}} '
     },
     {
         id: 14,
-        label: "Реле РТВ-I",
+        label: 'Реле РТВ-I',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени T",
+            label: 'T',
+            labelForUser: 'Постоянная времени T',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             return 1 / (30 * Math.pow(I / Is - 1, 3)) + T;
         },
-        displayExpression: "t = \\frac{1}{30 \\times \\left( \\frac{I}{I_s} - 1 \\right)^{3}} + T "
+        displayExpression: 't = \\frac{1}{30 \\times \\left( \\frac{I}{I_s} - 1 \\right)^{3}} + T '
     },
     {
         id: 15,
-        label: "Реле РТВ-IV",
+        label: 'Реле РТВ-IV',
         type: TYPE_CURVE.EXPRESSION,
         variableDescriptions: [{
-            label: "T",
-            labelForUser: "Постоянная времени T",
+            label: 'T',
+            labelForUser: 'Постоянная времени T',
         }, {
-            label: "Is",
-            labelForUser: "Уставка",
+            label: 'Is',
+            labelForUser: 'Уставка',
         }],
-        fn: function(I) {
+        fn(I) {
             let T = this.variables['T'];
             let Is = this.variables['Is'];
             return 1 / (20 * Math.pow((I / Is - 1) / 6, 1.8)) + T;
         },
-        displayExpression: "t = \\frac{1}{20 \\times \\left( \\left( \\frac{I}{I_s} - 1 \\right)/6\\right)^{1.8}} + T "
+        displayExpression: 't = \\frac{1}{20 \\times \\left( \\left( \\frac{I}{I_s} - 1 \\right)/6\\right)^{1.8}} + T '
     }
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-

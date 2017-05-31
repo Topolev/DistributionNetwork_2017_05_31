@@ -3,7 +3,6 @@ import {Point} from '../classes/Point';
 import {ConfigCoordinatePanel} from '../classes/ConfigCoordinatePanel';
 import * as util from '../classes/UtilCanvas';
 
-
 export class PointsRelativeCurve extends Curve {
     points: Array<Point> = [];
     baseValue: number;
@@ -41,7 +40,6 @@ export class PointsRelativeCurve extends Curve {
             this.drawHorizontalLineFromXOriginToEndWorkspace(xOrigin, util.yFactToOriginLog(yFact, config), ctx, config);
         }
     }
-
 
     private approximationByLine(point1: Point, point2: Point): (x: number) => number {
         const x1 = +point1.x, y1 = +point1.y;

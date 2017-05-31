@@ -33,7 +33,7 @@ export class BuilderCurves {
             }
             case 'EXPRESSION': {
                 curve = new ExpressionCurve();
-                (<ExpressionCurve> curve).fn = (x) =>-0.009*x +0.09;
+                (<ExpressionCurve> curve).fn = (x) => -0.009 * x + 0.09;
             }
         }
 

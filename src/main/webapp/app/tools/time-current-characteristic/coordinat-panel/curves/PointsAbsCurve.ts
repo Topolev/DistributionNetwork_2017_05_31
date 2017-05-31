@@ -19,8 +19,6 @@ export class PointsAbsCurve extends Curve {
                 util.xOriginToFactLog(+this.points[i].x, config), util.yOriginToFactLog(+this.points[i].y, config), color);
             pointPrev = this.points[i];
         }
-
-
     }
 
     public drawHorizontalLine(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, xOrigin: number) {

@@ -26,7 +26,7 @@ export class Characteristic {
     pointsTemplate?: PointsTemplate;
 
     constructor(id?: number) {
-        this.id = id == undefined ? null : id;
+        this.id = id === undefined ? null : id;
         this.color = '#000000';
         this.curves = [];
         this.visable = true;

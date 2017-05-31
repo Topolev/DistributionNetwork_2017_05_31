@@ -1,13 +1,11 @@
-
-
-import {Component} from "@angular/core";
-import {ConfigCoordinatePanel, defaultConfig} from "./coordinat-panel/classes/ConfigCoordinatePanel";
-import {Characteristic} from "./coordinat-panel/characteristic/Characteristic";
-import {SectionX} from "./coordinat-panel/classes/SectionX";
-import {BuilderCurves} from "./coordinat-panel/curves/BuilderCurves";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {CharacteristicService} from "./modals/characteristic.service";
-import {CharacteristicComponent} from "./modals/characteristic.component";
+import {Component} from '@angular/core';
+import {ConfigCoordinatePanel, defaultConfig} from './coordinat-panel/classes/ConfigCoordinatePanel';
+import {Characteristic} from './coordinat-panel/characteristic/Characteristic';
+import {SectionX} from './coordinat-panel/classes/SectionX';
+import {BuilderCurves} from './coordinat-panel/curves/BuilderCurves';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CharacteristicService} from './modals/characteristic.service';
+import {CharacteristicComponent} from './modals/characteristic.component';
 @Component({
     selector: 'time-current-characteristic',
     templateUrl: './time-current-characteristic.component.html',
@@ -63,7 +61,6 @@ export class TimeCurrentCharacteristicComponent {
     deleteCharacteristic(characteristic: Characteristic) {
         this.characteristics = this.characteristics.filter((existCharacteristic) => characteristic.id !== existCharacteristic.id);
     }
-
 
     addSectionX() {
         this.sectionsX = this.sectionsX.concat(new SectionX());
