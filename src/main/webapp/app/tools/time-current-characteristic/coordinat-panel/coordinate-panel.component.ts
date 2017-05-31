@@ -38,6 +38,7 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
 
             if (changes.characteristics) {
                 this.drawCharacteristics();
+                this.drawSectionsX();
             }
         }
     }
@@ -66,7 +67,6 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
 
     private render() {
         this.clearCanvases();
-
         this.drawAxisXLog();
         this.drawAxisYLog();
         this.drawCharacteristics();
@@ -163,8 +163,10 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
 
             /* HORIZONAL LINE*/
             for (let characteristic of this.characteristics) {
-                for (let curve of characteristic.curves) {
-                    curve.drawHorizontalLine(this.ctxSlice, conf, xOrigin);
+                if (characteristic.visable) {
+                    for (let curve of characteristic.curves) {
+                        curve.drawHorizontalLine(this.ctxSlice, conf, xOrigin);
+                    }
                 }
             }
 
@@ -185,8 +187,10 @@ export class CoordinatePanelComponent implements AfterViewInit, OnChanges {
             if (sectionX.x !== undefined) {
                 // Horizonal line
                 for (let characteristic of this.characteristics) {
-                    for (let curve of characteristic.curves) {
-                        curve.drawHorizontalLine(this.ctxStaticSlice, conf, sectionX.x);
+                    if (characteristic.visable) {
+                        for (let curve of characteristic.curves) {
+                            curve.drawHorizontalLine(this.ctxStaticSlice, conf, sectionX.x);
+                        }
                     }
                 }
 
