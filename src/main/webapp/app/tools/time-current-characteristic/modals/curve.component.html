@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title">Создать ступень</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Наименованиен</label>
+        <div class="col-8">
+            <input class="form-control" type="text" [(ngModel)]='curve.label'>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Наименованиен</label>
+        <div class="col-8">
+            <select class="form-control" [(ngModel)]="curve.curveTemplate" (change)="changeCurveTemplate()">
+                <option [ngValue]="null">Выбрать</option>
+                <option *ngFor="let curveTemplate of curveTemplates" [ngValue]="curveTemplate">{{curveTemplate.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="curve.curveTemplate">
+
+        <div class="form-group row" *ngFor="let variable of curve.curveTemplate.variableDescriptions">
+            <label class="col-4 col-form-label">{{variable.labelForUser}}</label>
+            <div class="col-8">
+                <input class="form-control" type="text">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="saveCurve()">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+</div>
+
+
+

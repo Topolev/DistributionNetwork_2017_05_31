@@ -8,6 +8,7 @@ import {BuilderCurves} from '../coordinat-panel/curves/BuilderCurves';
 import {PointsTemplate} from '../coordinat-panel/classes/PointsTemplate';
 import {FuseService} from '../services/fuse.service';
 import {SwitcherService} from '../services/switcher.service';
+import {CurveComponent} from './curve.component';
 
 declare var jQuery: any;
 
@@ -55,6 +56,10 @@ export class CharacteristicComponent implements OnInit {
         this.characteristicService.setNewCharacteristic(this.characteristic);
         this.characteristicService.deleteLockedTemplate(this.prevPointsTemplate);
         this.activeModal.close();
+    }
+
+    openModalCreateCurve() {
+        this.modalService.open(CurveComponent);
     }
 
     /* private deleteStage(stage: Stage) {

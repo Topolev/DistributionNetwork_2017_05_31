@@ -22,7 +22,7 @@ export class CurveTemplate {
 }
 
 export const defaultCurveTemplates: CurveTemplate[] = [
-    {
+   /* {
         id: 0,
         label: 'По точкам (абсолютные значение)',
         type: TYPE_CURVE.POINTS_ABS
@@ -31,7 +31,7 @@ export const defaultCurveTemplates: CurveTemplate[] = [
         id: 1,
         label: 'По точкам (относительные значение)',
         type: TYPE_CURVE.POINTS_RELATIVE
-    },
+    },*/
     {
         id: 2,
         label: 'Независимая',

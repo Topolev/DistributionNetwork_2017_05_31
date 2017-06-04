@@ -13,7 +13,8 @@
         </div>
         <div class="col-2">
             <p style="width:100%; height:36px; border:1px solid #efefef; border-radius: 4px;">
-                <input type="color" style="width:100%; height:100%; background: none;" [(ngModel)]='characteristic.color'/>
+                <input type="color" style="width:100%; height:100%; background: none;"
+                       [(ngModel)]='characteristic.color'/>
             </p>
         </div>
     </div>
@@ -23,7 +24,8 @@
         <div class="col-8">
             <select class="form-control" [(ngModel)]="characteristic.voltageStep">
                 <option [ngValue]="null">Не выбрано</option>
-                <option *ngFor='let voltageStep of voltageSteps' [ngValue]="voltageStep.value">{{voltageStep.value}}</option>
+                <option *ngFor='let voltageStep of voltageSteps' [ngValue]="voltageStep.value">{{voltageStep.value}}
+                </option>
             </select>
         </div>
     </div>
@@ -48,9 +50,11 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Тип предохранителя</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildFuseCharacteristic()">
+                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate"
+                            (change)="buildFuseCharacteristic()">
                         <option [ngValue]="null">Задать</option>
-                        <option *ngFor="let fusePointsTemplate of fuseService.getVisiblePointTemplates()" [ngValue]="fusePointsTemplate">
+                        <option *ngFor="let fusePointsTemplate of fuseService.getVisiblePointTemplates()"
+                                [ngValue]="fusePointsTemplate">
                             {{fusePointsTemplate.series + " " + fusePointsTemplate.type}}
                         </option>
                     </select>
@@ -64,9 +68,11 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label" style="text-align:right;">Тип автоматического выключателя</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate" (change)="buildSwitcherCharacteristic()">
+                    <select class="form-control" [(ngModel)]="characteristic.pointsTemplate"
+                            (change)="buildSwitcherCharacteristic()">
                         <option [ngValue]="null">Задать</option>
-                        <option *ngFor="let switcherPointsTemplate of switcherService.getSwitcherPointTemplates()" [ngValue]="switcherPointsTemplate">
+                        <option *ngFor="let switcherPointsTemplate of switcherService.getSwitcherPointTemplates()"
+                                [ngValue]="switcherPointsTemplate">
                             {{switcherPointsTemplate.label}}
                         </option>
                     </select>
@@ -82,14 +88,31 @@
         </div>
         <!--END SET UP SWITCHER-->
 
+        <!--SET UP CUSTOM CHARACTERISTIC-->
+        <div *ngSwitchCase="2">
+            <button (click)="openModalCreateCurve()">Добавить ступень</button>
+            <table>
+                <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Тип характеристики</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let curve of characteristic.curves">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--END SET UP CUSTOM CHARACTERISTIC-->
     </div>
 
 
-
-
 </div>
-
-
 
 
 <div class="modal-footer">

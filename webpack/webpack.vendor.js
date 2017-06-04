@@ -19,7 +19,7 @@ module.exports = {
             'ng-jhipster',
             'ng2-webstorage',
             'rxjs',
-            'crypto-js'
+            'mathjax'
         ]
     },
     resolve: {

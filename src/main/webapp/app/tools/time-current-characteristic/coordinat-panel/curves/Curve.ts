@@ -4,6 +4,7 @@ import {CurveTemplate} from './CurveTemplate';
 import {Characteristic} from '../characteristic/Characteristic';
 
 export class Curve {
+    label: string;
     curveTemplate: CurveTemplate;
 
     public draw(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel) {

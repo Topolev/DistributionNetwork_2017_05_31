@@ -1,21 +1,22 @@
 <div class="container">
-<ngb-tabset [destroyOnHide] = "false">
-    <ngb-tab title="Характеристики">
-        <ng-template ngbTabContent>
-            <workspace></workspace>
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Предохранители">
-        <ng-template ngbTabContent>
-            <fuse-catalog></fuse-catalog>
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Автоматические выключатели">
-        <ng-template ngbTabContent>
-            <switcher-catalog></switcher-catalog>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
+
+    <ngb-tabset [destroyOnHide]="false">
+        <ngb-tab title="Характеристики">
+            <ng-template ngbTabContent>
+                <workspace></workspace>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Предохранители">
+            <ng-template ngbTabContent>
+                <fuse-catalog></fuse-catalog>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Автоматические выключатели">
+            <ng-template ngbTabContent>
+                <switcher-catalog></switcher-catalog>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
 </div>>
 
 

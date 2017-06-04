@@ -12,6 +12,7 @@ import {WorkspaceComponent} from './workspace.component';
 import {FuseService} from './services/fuse.service';
 import {SwitcherService} from './services/switcher.service';
 import {FuseTemplateComponent} from './modals/fuse-template.component';
+import {CurveComponent} from './modals/curve.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {FuseTemplateComponent} from './modals/fuse-template.component';
         SwitcherCatalogComponent,
         TimeCurrentCharacteristicComponent,
         CoordinatePanelComponent,
-        CharacteristicComponent
+        CharacteristicComponent,
+        CurveComponent,
     ],
     entryComponents: [
         WorkspaceComponent,
@@ -35,7 +37,8 @@ import {FuseTemplateComponent} from './modals/fuse-template.component';
         FuseTemplateComponent,
         TimeCurrentCharacteristicComponent,
         CoordinatePanelComponent,
-        CharacteristicComponent
+        CharacteristicComponent,
+        CurveComponent,
     ],
     providers: [CharacteristicService, FuseService, SwitcherService]
 })
