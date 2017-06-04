@@ -27,12 +27,49 @@
         </div>
     </div>
 
+    <button class="btn btn-default"
+            (click)="createPoint()">Добавить точку
+    </button>
+    <div  class="setup-block__alert alert alert-warning"
+                    *ngIf="pointsTemplate.points.length == 0">
+    Пока не задано ни одной точки характеристики. Для добавления новой точки
+    воспользуйтесь соответствующей кнопкой выше. Для характеристики необходимо
+    задать как минимум 2 точки.
+</div>
+    <div  class="setup-block__alert alert alert-warning">
+        Обратите внимание, что для корректного тображения характеристики
+        необходимо задавать точки в порядке возрастания тока, начиная с точки
+        с наименьшим значением тока
+    </div>
+
+    <table class="table" *ngIf="pointsTemplate.points.length > 0">
+        <thead class="thead-default">
+        <tr>
+            <th>Ток, A</th>
+            <th>Время, с</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr *ngFor="let point of pointsTemplate.points">
+            <td><input [(ngModel)]="point.x" class="form-control"></td>
+            <td><input [(ngModel)]="point.y" class="form-control"></td>
+            <td>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="deletePoint(point)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+        <tbody>
+
+        </tbody>
+    </table>
+
 
 </div>
 
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="savePointsTemplate()">Save</button>
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
 </div>
 

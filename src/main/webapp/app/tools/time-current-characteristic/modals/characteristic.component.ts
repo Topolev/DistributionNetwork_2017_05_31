@@ -23,12 +23,9 @@ export class CharacteristicComponent implements OnInit {
      @ViewChild('contentModal') contentModal: ElementRef;*/
 
     characteristic: Characteristic = new Characteristic();
-    pointsTemplate: PointsTemplate = null;
-
-    builderCurves: BuilderCurves = new BuilderCurves();
+    prevPointsTemplate: PointsTemplate;
 
     config: ConfigCoordinatePanel;
-    isEditMode: boolean;
     voltageSteps: Array<{value: number}> = defaultVoltageSteps;
 
     typeProtection: TYPE_PROTECTION;
@@ -40,6 +37,7 @@ export class CharacteristicComponent implements OnInit {
                 private switcherService: SwitcherService) {
         characteristicService.currentCharacteristic$.subscribe(
             (characteristic) => {
+                this.prevPointsTemplate = characteristic ? characteristic.pointsTemplate : null;
                 this.characteristic = characteristic ? characteristic : new Characteristic(Date.now());
                 this.characteristic.voltageStep = characteristic ? characteristic.voltageStep : this.voltageSteps[0].value;
             }
@@ -55,6 +53,7 @@ export class CharacteristicComponent implements OnInit {
 
     saveCharacteristic() {
         this.characteristicService.setNewCharacteristic(this.characteristic);
+        this.characteristicService.deleteLockedTemplate(this.prevPointsTemplate);
         this.activeModal.close();
     }
 
@@ -81,8 +80,6 @@ export class CharacteristicComponent implements OnInit {
      */
     changeTypeProtection() {
         this.characteristic.curves = [];
-        // this.selectedFusePointsTemplate = null;
-        // this.selectedSwitcherPointsTemplate = null;
     }
 
     buildFuseCharacteristic() {

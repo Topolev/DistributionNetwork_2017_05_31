@@ -62,7 +62,7 @@
                                            class="setup-block__visable-input"
                                            [attr.id]="'visable_' + characteristic.id"
                                            [(ngModel)]="characteristic.visable"
-                                           (click)="changeVisable(characteristic)"/>
+                                           (click)="changeVisible(characteristic)"/>
                                     <label class="setup-block__visable-label"
                                            [attr.for]="'visable_' + characteristic.id">
                                     </label>
@@ -73,7 +73,7 @@
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btn btn-secondary btn-sm"
-                                            (click)="deleteCharacteristic(characteristic)">
+                                            (click)="characteristicService.deleteCharacteristic(characteristic)">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </td>

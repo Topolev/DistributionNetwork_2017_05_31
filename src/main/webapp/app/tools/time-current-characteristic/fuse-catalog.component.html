@@ -9,6 +9,8 @@
 <table class="table">
     <thead class="thead-default">
     <tr>
+        <th></th>
+        <th></th>
         <th>Серия</th>
         <th>Тип</th>
         <th>Производитель</th>
@@ -16,15 +18,32 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let pointTemplate of pointTemplates">
+    <tr *ngFor="let pointTemplate of fuseService.getFusePointTemplates()"
+        [ngClass]="{'locked':characteristicService.isLockedPointsTemplate(pointTemplate) }">
+        <td>
+            <span class="fa" aria-hidden="true"
+                  [ngClass]="{'fa-lock':characteristicService.isLockedPointsTemplate(pointTemplate),
+                                'fa-unlock': !characteristicService.isLockedPointsTemplate(pointTemplate)}"></span>
+        </td>
+        <td>
+            <span class="fa fa-eye"
+                  [ngClass]="{'checked': pointTemplate.visible === true, 'unchecked': pointTemplate.visible ===false}"
+                  (click)="changeVisible(pointTemplate)"></span>
+        </td>
         <td>{{pointTemplate.series}}</td>
         <td>{{pointTemplate.type}}</td>
         <td>{{pointTemplate.manufacture}}</td>
         <td>
-            <button type="button" class="btn btn-secondary btn-sm" (click) = "openModalCreateOrEditCharacteristic(pointTemplate)">
+            <button type="button"
+                    class="btn btn-secondary btn-sm"
+                    (click)="openModalCreateOrEditCharacteristic(pointTemplate)"
+                    [ngClass]="{'disabled': characteristicService.isLockedPointsTemplate(pointTemplate)}">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </button>
-            <button type="button" class="btn btn-secondary btn-sm" (click) = "deletePointsTemplate(pointTemplate)">
+            <button type="button"
+                    class="btn btn-secondary btn-sm"
+                    (click)="deletePointsTemplate(pointTemplate)"
+                    [ngClass]="{'disabled': characteristicService.isLockedPointsTemplate(pointTemplate)}">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
         </td>

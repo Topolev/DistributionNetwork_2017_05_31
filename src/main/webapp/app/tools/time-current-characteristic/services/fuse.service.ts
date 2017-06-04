@@ -5,10 +5,12 @@ import {PointsAbsCurve} from '../coordinat-panel/curves/PointsAbsCurve';
 import {Point} from '../coordinat-panel/classes/Point';
 import {BuilderCurves} from '../coordinat-panel/curves/BuilderCurves';
 import {CurveTemplate, defaultCurveTemplates} from '../coordinat-panel/curves/CurveTemplate';
-import {Subject} from "rxjs";
+import {Subject} from 'rxjs';
 
 export class FuseService {
     private fusePointTemplates: PointsTemplate[] = defaultFusePointTemplates;
+    private lockedFusePointTemplates: PointsTemplate[];
+
     private builderCurves = new BuilderCurves();
     private curveTemplates: CurveTemplate[] = defaultCurveTemplates;
 
@@ -25,8 +27,30 @@ export class FuseService {
     setNewPointsTemplate(pointsTemplate: PointsTemplate) {
         this.newPointsTemplate.next(pointsTemplate);
     }
+
     public getFusePointTemplates(): PointsTemplate[] {
         return this.fusePointTemplates;
+    }
+
+    public getVisiblePointTemplates(): PointsTemplate[] {
+        return this.fusePointTemplates.filter((pointTemplate) => pointTemplate.visible);
+    }
+
+    public addLockedFusePointTemplate(pointsTemplate: PointsTemplate) {
+        this.lockedFusePointTemplates.push(pointsTemplate);
+    }
+
+    public addFusePointTemplate(pointsTemplate: PointsTemplate) {
+        this.fusePointTemplates = this.fusePointTemplates.concat(pointsTemplate);
+    }
+
+    public updatePointTemplate(pointsTemplate: PointsTemplate) {
+        this.fusePointTemplates = this.fusePointTemplates.map(
+            (currentPointTemplate) => currentPointTemplate === pointsTemplate ? pointsTemplate : currentPointTemplate);
+    }
+
+    public deleteFusePointTemplate(pointsTemplate: PointsTemplate) {
+        this.fusePointTemplates = this.fusePointTemplates.filter((currentPointsTemplate) => currentPointsTemplate !== pointsTemplate);
     }
 
     public buildFuseCharacteristic(pointsTemplate: PointsTemplate, characteristic: Characteristic) {

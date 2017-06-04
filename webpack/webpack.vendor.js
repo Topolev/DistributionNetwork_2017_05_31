@@ -18,7 +18,8 @@ module.exports = {
             'jquery',
             'ng-jhipster',
             'ng2-webstorage',
-            'rxjs'
+            'rxjs',
+            'crypto-js'
         ]
     },
     resolve: {

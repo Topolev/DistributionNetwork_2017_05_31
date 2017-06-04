@@ -23,9 +23,10 @@ export class WorkspaceComponent {
     constructor(private modalService: NgbModal,
                 private characteristicService: CharacteristicService) {
         this.configPanel = defaultConfig;
-        this.characteristicService.newCharacteristic$.subscribe(
-            (characteristic) => {
-                this.setCharacteristic(characteristic);
+
+        this.characteristicService.lastCharacteristics$.subscribe(
+            (characteristics) => {
+                this.characteristics = characteristics;
             }
         );
     }
@@ -35,30 +36,9 @@ export class WorkspaceComponent {
         console.log(this.description);
     }
 
-    setCharacteristic(characteristic: Characteristic) {
-        let isExistCharacrteristic = this.characteristics.some((existCharacteristic) => existCharacteristic.id === characteristic.id);
-        if (isExistCharacrteristic) {
-            this.characteristics.map((existCharacteristic) =>
-                existCharacteristic.id === characteristic.id ?
-                    characteristic : existCharacteristic
-            );
-            this.characteristics = this.characteristics.concat();
-        } else {
-            this.characteristics = this.characteristics.concat(characteristic);
-        }
-    }
-
-    changeVisable(characteristic: Characteristic) {
+    changeVisible(characteristic: Characteristic) {
         characteristic.visable = !characteristic.visable;
-        this.updateCharacteristic();
-    }
-
-    updateCharacteristic() {
-        this.characteristics = this.characteristics.concat();
-    }
-
-    deleteCharacteristic(characteristic: Characteristic) {
-        this.characteristics = this.characteristics.filter((existCharacteristic) => characteristic.id !== existCharacteristic.id);
+        this.characteristicService.updateCharacteristic(characteristic);
     }
 
     addSectionX() {
@@ -75,9 +55,6 @@ export class WorkspaceComponent {
 
     openModalCreateOrEditCharacteristic(characteristic: Characteristic) {
         this.modalService.open(CharacteristicComponent, {windowClass: 'modal-create-new-graph'});
-        /*if (characteristic != null){
-         characteristic = JSON.parse(JSON.stringify(characteristic));
-         }*/
         this.characteristicService.setCurrentCharacteristic(characteristic);
     }
 }
