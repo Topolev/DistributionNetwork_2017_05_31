@@ -6,6 +6,7 @@ import {BuilderCurves} from './coordinat-panel/curves/BuilderCurves';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CharacteristicService} from './services/characteristic.service';
 import {CharacteristicComponent} from './modals/characteristic.component';
+import {defaultVoltageSteps} from './modals/VoltageSteps';
 @Component({
     selector: 'workspace',
     templateUrl: './workspace.component.html',
@@ -13,6 +14,9 @@ import {CharacteristicComponent} from './modals/characteristic.component';
 })
 export class WorkspaceComponent {
     configPanel: ConfigCoordinatePanel;
+    currentVoltage: number = null;
+    voltageSteps: Array<{value: number}> = defaultVoltageSteps;
+
     characteristics: Array<Characteristic> = [];
     sectionsX: Array<SectionX> = [];
 
@@ -56,5 +60,12 @@ export class WorkspaceComponent {
     openModalCreateOrEditCharacteristic(characteristic: Characteristic) {
         this.modalService.open(CharacteristicComponent, {windowClass: 'modal-create-new-graph'});
         this.characteristicService.setCurrentCharacteristic(characteristic);
+    }
+
+    changeConfig() {
+        console.log('ewwe');
+        let test = this.configPanel;
+        this.configPanel = Object.assign({}, this.configPanel);
+        console.log(test === this.configPanel);
     }
 }

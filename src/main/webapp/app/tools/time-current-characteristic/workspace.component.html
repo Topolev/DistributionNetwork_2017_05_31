@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-md-6">
             <coordinate-panel
+                [voltage] = "currentVoltage"
                 [configPanel]="configPanel"
                 [characteristics]="characteristics"
                 [sectionsX]="sectionsX">
@@ -131,6 +132,43 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div class="setup-block">
+                <h1 class="setup-block__title">Настройка рабочей области</h1>
+                <div class="setup-block__content">
+                    <table>
+                        <tr>
+                            <td>Текущее напряжение</td>
+                            <td>
+                                <select class="form-control" [(ngModel)]="configPanel.currentVoltage" (change)=" changeConfig()">
+                                    <option [ngValue]="null">Не выбрано</option>
+                                    <option *ngFor='let voltageStep of voltageSteps' [ngValue]="voltageStep.value">{{voltageStep.value}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>X (px)</td>
+                            <td>
+                                <input type="text" class="form-control" [(ngModel)]="configPanel.xInitPxPerDivision" (keyup) ="changeConfig()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>X value start</td>
+                            <td>
+                                <input type="text" class="form-control" [(ngModel)]="configPanel.xDivisionLog" (keyup) ="changeConfig()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Y (px)</td>
+                            <td>
+                                <input type="text" class="form-control" [(ngModel)]="configPanel.yInitPxPerDivision" (keyup) ="changeConfig()">
+                            </td>
+                        </tr>
+                    </table>
+
+
                 </div>
             </div>
         </div>

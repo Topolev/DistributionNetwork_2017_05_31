@@ -20,7 +20,7 @@ export class ConfigCoordinatePanel {
     colorIntermediateAxis: string;
     font: string;
 
-    choosenVoltage: number;
+    currentVoltage: number;
 
     width: number;
     height: number;
@@ -34,7 +34,7 @@ export const defaultConfig: ConfigCoordinatePanel = {
     xInitPxPerDivision: 100,
     yInitPxPerDivision: 100,
 
-    xDivisionLog: 0,
+    xDivisionLog: -2,
     yDivisionLog: -2,
 
     maxNumberWithinX: 12,
@@ -47,7 +47,7 @@ export const defaultConfig: ConfigCoordinatePanel = {
     colorIntermediateAxis: 'rgba(0,0,0,0.1)',
     font: '14px Arial',
 
-    choosenVoltage: undefined,
+    currentVoltage: null,
 
     width: 500,
     height: 500

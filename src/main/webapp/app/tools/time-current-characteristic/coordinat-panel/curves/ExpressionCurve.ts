@@ -3,6 +3,7 @@ import {Point} from '../classes/Point';
 import {ConfigCoordinatePanel} from '../classes/ConfigCoordinatePanel';
 import * as util from '../classes/UtilCanvas';
 import {StringArray} from './BuilderCurves';
+import {Characteristic} from '../characteristic/Characteristic';
 
 export class ExpressionCurve extends Curve {
 
@@ -13,7 +14,7 @@ export class ExpressionCurve extends Curve {
         super();
     }
 
-    public draw(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, color: string) {
+    public draw(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel) {
 
         const step = 1;
 
@@ -24,14 +25,14 @@ export class ExpressionCurve extends Curve {
         for (let i = xPrevOrigin + step; i < xEnd; i += step) {
             util.drawLine(ctx,
                 +util.xOriginToFactLog(xPrevOrigin, config), util.yOriginToFactLog(yPrevOrigin, config),
-                util.xOriginToFactLog((xPrevOrigin + step), config), util.yOriginToFactLog(+this.fn(xPrevOrigin + step), config), color);
+                util.xOriginToFactLog((xPrevOrigin + step), config), util.yOriginToFactLog(+this.fn(xPrevOrigin + step), config), characteristic.color);
 
             xPrevOrigin += step;
             yPrevOrigin = +this.fn(xPrevOrigin);
         }
     }
 
-    drawHorizontalLine(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, xOrigin: number) {
+    drawHorizontalLine(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel, xOrigin: number) {
         const yOrigin = this.fn(xOrigin);
         this.drawHorizontalLineFromXOriginToEndWorkspace(xOrigin, yOrigin, ctx, config);
     }

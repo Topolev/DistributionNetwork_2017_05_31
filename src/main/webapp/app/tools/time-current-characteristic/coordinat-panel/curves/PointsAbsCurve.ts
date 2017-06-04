@@ -2,6 +2,7 @@ import {Curve} from './Curve';
 import {Point} from '../classes/Point';
 import {ConfigCoordinatePanel} from '../classes/ConfigCoordinatePanel';
 import * as util from '../classes/UtilCanvas';
+import {Characteristic} from '../characteristic/Characteristic';
 
 export class PointsAbsCurve extends Curve {
     points: Array<Point> = [];
@@ -10,28 +11,30 @@ export class PointsAbsCurve extends Curve {
         super();
     }
 
-    public draw(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, color: string) {
-
+    public draw(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel) {
+        let baseU = (characteristic.voltageStep && config.currentVoltage) ? config.currentVoltage / characteristic.voltageStep : 1;
+        console.log(baseU);
         let pointPrev = this.points[0];
         for (let i = 1; i < this.points.length; i++) {
             util.drawLine(ctx,
-                util.xOriginToFactLog(+pointPrev.x, config), util.yOriginToFactLog(+pointPrev.y, config),
-                util.xOriginToFactLog(+this.points[i].x, config), util.yOriginToFactLog(+this.points[i].y, config), color);
+                util.xOriginToFactLog(+pointPrev.x * baseU, config), util.yOriginToFactLog(+pointPrev.y, config),
+                util.xOriginToFactLog(+this.points[i].x * baseU, config), util.yOriginToFactLog(+this.points[i].y, config), characteristic.color);
             pointPrev = this.points[i];
         }
     }
 
-    public drawHorizontalLine(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, xOrigin: number) {
+    public drawHorizontalLine(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel, xOrigin: number) {
         console.log('drawHorizontalLine');
-        if ((+this.points[0].x < xOrigin ) && (+this.points[this.points.length - 1].x > xOrigin )) {
+        let baseU = (characteristic.voltageStep && config.currentVoltage) ? config.currentVoltage / characteristic.voltageStep : 1;
+        if ((+this.points[0].x * baseU < xOrigin ) && (+this.points[this.points.length - 1].x * baseU > xOrigin )) {
             let prevPoint = this.points[0];
             let i = 0;
-            while (prevPoint.x < xOrigin && i < this.points.length) {
+            while (prevPoint.x * baseU < xOrigin && i < this.points.length) {
                 prevPoint = this.points[++i];
             }
 
-            let point1Fact = new Point(util.xOriginToFactLog(this.points[i - 1].x, config), util.yOriginToFactLog(this.points[i - 1].y, config));
-            let point2Fact = new Point(util.xOriginToFactLog(prevPoint.x, config), util.yOriginToFactLog(prevPoint.y, config));
+            let point1Fact = new Point(util.xOriginToFactLog(this.points[i - 1].x * baseU, config), util.yOriginToFactLog(this.points[i - 1].y, config));
+            let point2Fact = new Point(util.xOriginToFactLog(prevPoint.x * baseU, config), util.yOriginToFactLog(prevPoint.y, config));
 
             let fn = this.approximationByLine(point1Fact, point2Fact);
             let xFact = util.xOriginToFactLog(xOrigin, config);

@@ -1,15 +1,16 @@
 import {ConfigCoordinatePanel} from '../classes/ConfigCoordinatePanel';
 import * as util from '../classes/UtilCanvas';
 import {CurveTemplate} from './CurveTemplate';
+import {Characteristic} from '../characteristic/Characteristic';
 
 export class Curve {
     curveTemplate: CurveTemplate;
 
-    public draw(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, color: string) {
+    public draw(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel) {
         console.log('This method will have to be overrided in class inheritor');
     }
 
-    public drawHorizontalLine(ctx: CanvasRenderingContext2D, config: ConfigCoordinatePanel, xOrigin: number) {
+    public drawHorizontalLine(ctx: CanvasRenderingContext2D, characteristic: Characteristic, config: ConfigCoordinatePanel, xOrigin: number) {
         console.log('This method will have to be overrided in class inheritor');
     }
 
